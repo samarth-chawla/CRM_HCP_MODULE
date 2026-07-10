@@ -10,6 +10,7 @@ Endpoints
 from __future__ import annotations
 
 import re
+import threading
 
 # pyrefly: ignore [missing-import]
 from fastapi import Depends, FastAPI, HTTPException
@@ -60,7 +61,9 @@ app.add_middleware(CORSMiddleware, **_cors)
 
 @app.on_event("startup")
 def _startup() -> None:
-    init_db()
+    # Run schema bootstrap in the background so the server binds to :8000
+    # immediately instead of blocking on the (slow cold-start) database.
+    threading.Thread(target=init_db, daemon=True).start()
 
 
 @app.get("/health")

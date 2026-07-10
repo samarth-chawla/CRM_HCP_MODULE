@@ -7,8 +7,19 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.config import settings
 from app.db import models
 
-connect_args = {"check_same_thread": False} if settings.is_sqlite else {}
-engine = create_engine(settings.database_url, connect_args=connect_args, future=True)
+connect_args = (
+    {"check_same_thread": False}
+    if settings.is_sqlite
+    else {"connect_timeout": 10}
+)
+# pool_pre_ping probes dead connections; connect_timeout keeps a slow/unreachable
+# Neon pooler from hanging the whole app startup.
+engine = create_engine(
+    settings.database_url,
+    connect_args=connect_args,
+    pool_pre_ping=True,
+    future=True,
+)
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
