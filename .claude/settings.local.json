@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://127.0.0.1:8010/health)",
+      "Bash(curl -s -X POST http://127.0.0.1:8010/api/interaction/agent -H \"Content-Type: application/json\" -d '{\"message\":\"Met Dr. Priya Sharma today at 10:30 AM for a meeting. Discussed Product X efficacy. Shared the clinical study brochure. She seemed positive.\",\"currentInteractionState\":{}}')",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); s=d['updatedInteractionState']; print\\('intent:',d['intent'],'| tool:',d['selectedTool']\\); print\\('hcpName:',s['hcpName'],'| sentiment:',s['sentiment'],'| type:',s['interactionType']\\); print\\('compliance:',d['complianceStatus']['status']\\); print\\('toolCalls:',d['toolCalls']\\)\")",
+      "Bash(curl -s -X POST http://127.0.0.1:8010/api/interaction/save -H \"Content-Type: application/json\" -d '{\"interaction\":{\"hcpName\":\"Dr. Priya Sharma\",\"interactionType\":\"Meeting\",\"date\":\"2026-07-09\",\"topicsDiscussed\":\"Product X efficacy\",\"sentiment\":\"Positive\",\"materialsShared\":[\"Clinical study brochure\"]}}')",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" -X POST http://127.0.0.1:8010/api/interaction/save -H \"Content-Type: application/json\" -d '{\"interaction\":{\"hcpName\":\"Dr. X\"}}')",
+      "Bash(curl -s \"http://127.0.0.1:8010/api/hcps/search?q=Sharma\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('results:', [\\(r['name'],r['specialty']\\) for r in d['results']]\\)\")",
+      "Bash(curl -s -X POST \"http://127.0.0.1:8000/api/interaction/agent\" -H \"Content-Type: application/json\" -d '{\"message\":\"Show all interactions with Dr. Sharma\"}')",
+      "Bash(./.venv/Scripts/python.exe -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('tool =', d['toolCalls']\\); print\\('msg  =', d['assistantMessage']\\)\")",
+      "Bash(./.venv/Scripts/python.exe -c ' *)",
+      "Bash(curl -s -X POST \"http://127.0.0.1:8000/api/interaction/agent\" -H \"Content-Type: application/json\" -d '{\"message\":\"Schedule a follow-up with Dr. Sharma for next Friday at 11 AM\"}')",
+      "Bash(tail -n 30 \"/C:/Users/SAMARTH/AppData/Local/Temp/claude/C--Users-SAMARTH-Documents-Codex-2026-07-08-task-ai-first-crm-hcp-module/677bdee9-f34e-4037-a069-ad19135f09e0/tasks/bc5av4340.output\")",
+      "Bash(curl -s -m 5 -w \"\\\\nHTTP %{http_code}\\\\n\" \"http://127.0.0.1:8000/health\")"
+    ]
+  }
+}
