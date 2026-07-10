@@ -105,22 +105,6 @@ GROQ_MODEL=llama-3.3-70b-versatile
 > materials list are seeded so the lookup / recommendation tools return data
 > immediately.
 
-#### Resetting the database
-
-If the schema ever drifts from the models, or you just want a clean slate,
-`app/db/reset.py` drops every table, rebuilds them from the ORM models (the
-single source of truth), and reseeds the demo data — all in one command.
-**This destroys all data**, so only run it against a dev/demo database.
-
-```bash
-cd backend
-# prompts for confirmation
-python -m app.db.reset
-# or, non-interactive (scripts/CI):
-python -m app.db.reset --yes
-```
-
-After resetting, restart the backend so it reconnects to the fresh tables.
 
 ### 2. Frontend (React + Redux)
 
